@@ -13,6 +13,7 @@ async function main() {
   // constructor(name, symbol)
   const token = await IndexToken.deploy("Index Token", "INDX");
 
+  console.log("Waiting for deployment...");
   await token.waitForDeployment();
 
   console.log("Deployed at:", await token.getAddress());

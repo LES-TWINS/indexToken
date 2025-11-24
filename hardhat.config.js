@@ -1,14 +1,13 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-const { PRIVATE_KEY, SEPOLIA_RPC } = process.env;
-
+/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.24",
   networks: {
     sepolia: {
-      url: SEPOLIA_RPC,
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+      url: process.env.SEPOLIA_RPC,
+      accounts: [process.env.PRIVATE_KEY],
     },
   },
 };
