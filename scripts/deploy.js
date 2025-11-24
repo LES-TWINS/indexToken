@@ -1,25 +1,24 @@
 const { ethers } = require("hardhat");
+require("dotenv").config();
 
 async function main() {
   const [deployer] = await ethers.getSigners();
 
-  console.log("Deploying with address:", deployer.address);
-  console.log(
-    "Deployer balance:",
-    ethers.formatEther(await deployer.getBalance()),
-    "ETH"
-  );
+  console.log("Deploying with:", deployer.address);
+  const balance = await deployer.provider.getBalance(deployer.address);
+  console.log("Balance:", ethers.formatEther(balance), "ETH");
 
   const IndexToken = await ethers.getContractFactory("IndexToken");
-  const indexToken = await IndexToken.deploy("IndexToken", "IDX");
 
-  await indexToken.waitForDeployment();
+  // constructor(name, symbol)
+  const token = await IndexToken.deploy("Index Token", "INDX");
 
-  const addr = await indexToken.getAddress();
-  console.log("IndexToken deployed to:", addr);
+  await token.waitForDeployment();
+
+  console.log("Deployed at:", await token.getAddress());
 }
 
 main().catch((error) => {
   console.error(error);
-  process.exitCode = 1;
+  process.exit(1);
 });
